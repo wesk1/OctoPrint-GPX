@@ -11,7 +11,8 @@ from werkzeug.exceptions import BadRequest
 
 import octoprint.plugin
 from octoprint.events import Events
-from octoprint.server import admin_permission
+from octoprint.access import groups
+admin_permission = groups.GroupPermission(groups.ADMIN_GROUP)
 
 try:
 	import gcodex3g as gpx
@@ -254,7 +255,16 @@ class GPXPlugin(
 			return make_response("Invalid machineid. Upper or lower case letters and numbers only and 8 chars or less")
 		return None
 
+	# TemplatePlugin
+
+	def is_template_autoescaped(self):
+		return True
+
 	# BlueprintPlugin
+
+	def is_blueprint_csrf_protected(self):
+		return True
+	
 	@octoprint.plugin.BlueprintPlugin.route("/defaultmachine/<string:machineid>", methods=["GET"])
 	def defaultmachine(self, machineid, *args, **kwargs):
 		response = self.validate_machineid(machineid)

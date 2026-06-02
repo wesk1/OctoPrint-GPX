@@ -95,7 +95,7 @@ $(function() {
                 OctoPrint.postJson("plugin/GPX/ini", ini, {dataType: "text"})
                     .fail(function() {
                         var text = gettext("There was unexpected error while saving the GPX settings, please consult the logs.");
-                        new PNotify({title: gettext("GPX settings failed"), text: text, type: "error", hide: false});
+                        new PNotify({title: gettext("GPX settings failed"), text: text, type: "error", hide: false, text_escape: true});
                     });
             }
         };
@@ -148,7 +148,7 @@ $(function() {
             OctoPrint.postJson("plugin/GPX/machine/" + self.gpx.ini.printer.machine_type(), machine, {dataType: "text"})
                 .fail(function() {
                     var text = gettext("There was unexpected error while saving the GPX machine definition, please consult the logs.");
-                    new PNotify({title: gettext("GPX machine settings failed"), text: text, type: "error", hide: false});
+                    new PNotify({title: gettext("GPX machine settings failed"), text: text, type: "error", hide: false, text_escape: true});
                 });
             $("#gpx_machine_settings").modal("hide");
         };
