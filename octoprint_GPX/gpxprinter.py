@@ -176,7 +176,8 @@ class GpxPrinter():
 				return gpx.readnext()
 
 			while True:
-				timeout = 2 if gpx.waiting else self.timeout
+				# Poll promptly so short G4 dwells do not become two-second gaps.
+				timeout = 0.05 if gpx.waiting else self.timeout
 				try:
 					return self.outgoing.get(timeout=timeout)
 				except queue.Empty:
